@@ -1,0 +1,15 @@
+# Turn on the rPi on the hour, and shut it down at HH:50
+# This script will be initialized before any TrapCam scripts
+# And will act as a failsafe to prevent the rPi from sitting
+# in standby mode permanently if it misses it's next startup time.
+
+BEGIN 2015-01-01 00:00:00
+END 2025-12-31 23:00:00
+
+# Will allow the rPi to be ON for until shutdown externally (via script), so the next scheduled
+# startup will occur (hopefully) far enough in the future that
+# if the rPi shuts down after the supposed next 10-minute startup
+# called within TrapCam.sh, it will still turn back on
+
+ON M5 WAIT
+OFF M25
