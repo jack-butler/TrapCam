@@ -54,16 +54,16 @@ cd TrapCam/
 cd configs/
 
 sudo cp /boot/cmdline.txt /boot/cmdline.txt.old
-sudo cp cmdline.txt /boot/
+sudo cp cmdline.txt /boot/cmdline.txt
 
 sudo cp /boot/config.txt /boot/config.txt.old
-sudo cp config.txt /boot/
+sudo cp config.txt /boot/config.txt
 
 sudo cp ~/.bashrc ~/.bashrc.old
-sudo cp .bashrc ~/
+sudo cp .bashrc ~/.bashrc
 
 sudo cp /etc/rc.local /etc/rc.local.old
-sudo cp rc.local /etc/
+sudo cp rc.local /etc/rc.local
 
 cd ..
 
@@ -73,10 +73,10 @@ cd ..
 cd services/
 
 sudo cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
-sudo cp autologin@.service /etc/systemd/system/
+sudo cp autologin@.service /etc/systemd/system/autologin@.service
 
-sudo cp image_on_shutdown.service /etc/systemd/system/
-sudo cp splashscreen.service /etc/systemd/system/
+sudo cp image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
+sudo cp splashscreen.service /etc/systemd/system/splashscreen.service
 
 sudo systemctl enable splashscreen.service
 sudo systemctl start splashscreen.service
@@ -100,15 +100,15 @@ cd ..
 # ----------------------------------------------------------
 cd scripts/
 
-sudo cp TrapCam.sh ~/
-sudo cp shutdown_now.sh ~/
+sudo cp TrapCam.sh ~/TrapCam.sh
+sudo cp shutdown_now.sh ~/shutdown_now.sh
 
 cd ..
 
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-sudo cp splash.png /etc/
+sudo cp splash.png /etc/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location
