@@ -12,14 +12,16 @@
 # Check package dependencies
 # ----------------------------------------------------------
 # Need git and fbi to be installed
-if [ $(dpkg -l | grep fbi) -eq 1 ] || [ $(dpkg -l | grep git) -eq 1 ]; then
-	if [ $(dpkg -l | grep fbi) -eq 1 ]; then
-		echo "Please apt install fbi package"
-		exit 1
-	else
+apt search fbi
+if [ $? -eq 1 ]; then
+	echo "Please apt install fbi package"
+	exit 1
+fi
+
+apt search git
+if [ $? -eq 1 ]; then
 		echo "Please apt install git"
 		exit 1
-	fi
 fi
 
 # ----------------------------------------------------------
