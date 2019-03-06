@@ -25,6 +25,8 @@ fi
 # ----------------------------------------------------------
 # Install wittyPi
 # ----------------------------------------------------------
+cd ~
+
 wget http://www.uugear.com/repo/WittyPi2/installWittyPi.sh
 sudo echo "y n" | sudo sh installWittyPi.sh
 clear
