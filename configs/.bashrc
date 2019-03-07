@@ -117,6 +117,8 @@ fi
 # schedule the next start-up and then shutdown
 #--------------------------------------------
 clear
+sudo wittyPi/syncTime.sh
+
 # Test whether to start TrapCam
 if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ]; then
 	echo "Monitor is plugged in"
