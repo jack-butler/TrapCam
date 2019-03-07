@@ -9,42 +9,25 @@
 # Installs TrapCam dependencies, shell scripts, and configs
 
 # ----------------------------------------------------------
-# Check package dependencies
+# Check whether git and fbi are installed
 # ----------------------------------------------------------
-# Need git and fbi to be installed
-apt search fbi
-if [ $? -eq 1 ]; then
-	echo "Please apt install fbi package"
+git --version
+if [ $? -ne 0 ]; then
+	echo "Git is not installed. Please install git and try again."
+	echo "Exiting TrapCam install..."
 	exit 1
 fi
 
-apt search git
-if [ $? -eq 1 ]; then
-		echo "Please apt install git"
-		exit 1
+fbi --version
+if [ $? -ne 0 ]; then
+	echo "fbi package not installed. Please install fbi and try again."
+	echo "Exiting TrapCam install..."
+	exit 1
 fi
-
-# ----------------------------------------------------------
-# Install wittyPi
-# ----------------------------------------------------------
-cd ~
-
-wget http://www.uugear.com/repo/WittyPi2/installWittyPi.sh
-sudo echo "y n" | sudo sh installWittyPi.sh
-clear
-
-# ----------------------------------------------------------
-# Install WiringPi
-# ----------------------------------------------------------
-git clone https://github.com/WiringPi/WiringPi.git
-cd WiringPi
-./build
-clear
 
 # ----------------------------------------------------------
 # Pull TrapCam software from GitHub
 # ----------------------------------------------------------
-cd ~
 git clone https://github.com/jack-butler/TrapCam
 clear
 
@@ -126,7 +109,7 @@ cd ~
 clear
 echo "---------------------------------------------------------------"
 echo ""
-echo "TrapCam software has been installed. Please restart your rPi :)"
+echo "TrapCam software has been installed and will start upon reboot"
 echo ""
 echo "---------------------------------------------------------------"
 
