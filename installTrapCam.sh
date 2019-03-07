@@ -42,17 +42,17 @@ echo "--------------------------------------------------------------------------
 # ----------------------------------------------------------
 cd configs/
 
-sudo cp /boot/cmdline.txt /boot/cmdline.txt.old 2>$1 /dev/null
-sudo cp cmdline.txt /boot/cmdline.txt 2>$1 /dev/null
+cp /boot/cmdline.txt /boot/cmdline.txt.old
+cp cmdline.txt /boot/cmdline.txt
 
-sudo cp /boot/config.txt /boot/config.txt.old 2>$1 /dev/null
-sudo cp config.txt /boot/config.txt 2>$1 /dev/null
+cp /boot/config.txt /boot/config.txt.old
+cp config.txt /boot/config.txt
 
-sudo cp ~/.bashrc ~/.bashrc.old 2>$1 /dev/null
-sudo cp .bashrc ~/.bashrc 2>$1 /dev/null
+cp ~/.bashrc ~/.bashrc.old
+cp .bashrc ~/.bashrc
 
-sudo cp /etc/rc.local /etc/rc.local.old 2>$1 /dev/null
-sudo cp rc.local /etc/rc.local 2>$1 /dev/null
+cp /etc/rc.local /etc/rc.local.old
+cp rc.local /etc/rc.local
 
 cd ..
 
@@ -61,17 +61,17 @@ cd ..
 # ----------------------------------------------------------
 cd services/
 
-sudo cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old 2>$1 /dev/null
-sudo cp autologin@.service /etc/systemd/system/autologin@.service 2>$1 /dev/null
+cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
+cp autologin@.service /etc/systemd/system/autologin@.service
 
-sudo cp image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service 2>$1 /dev/null
-sudo cp splashscreen.service /etc/systemd/system/splashscreen.service 2>$1 /dev/null
+cp image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
+cp splashscreen.service /etc/systemd/system/splashscreen.service
 
-sudo systemctl enable splashscreen.service 2>$1 /dev/null
-sudo systemctl start splashscreen.service 2>$1 /dev/null
+systemctl enable splashscreen.service
+systemctl start splashscreen.service
 
-sudo systemctl enable image_on_shutdown.service 2>$1 /dev/null
-sudo systemctl start image_on_shutdown.service 2>$1 /dev/null
+systemctl enable image_on_shutdown.service
+systemctl start image_on_shutdown.service
 
 cd ..
 
@@ -80,7 +80,7 @@ cd ..
 # ----------------------------------------------------------
 cd schedules/
 
-sudo cp TrapCam_* ~/wittyPi/schedules/ 2>$1 /dev/null
+cp TrapCam_* ~/wittyPi/schedules/
 
 cd ..
 
@@ -89,22 +89,22 @@ cd ..
 # ----------------------------------------------------------
 cd scripts/
 
-sudo cp TrapCam.sh ~/TrapCam.sh 2>$1 /dev/null
-sudo cp shutdown_now.sh ~/shutdown_now.sh 2>$1 /dev/null
+cp TrapCam.sh ~/TrapCam.sh
+cp shutdown_now.sh ~/shutdown_now.sh
 
 cd ..
 
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-sudo cp splash.png /etc/splash.png 2>$1 /dev/null
+cp splash.png /etc/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location
 # ----------------------------------------------------------
 cd /media
-sudo mkdir DATA 2>$1 /dev/null
-sudo chown -R pi:pi /media/DATA 2>$1 /dev/null
+mkdir DATA 2>$1 /dev/null
+chown -R pi:pi /media/DATA
 
 # ----------------------------------------------------------
 # Finish install
