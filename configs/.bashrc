@@ -117,39 +117,47 @@ fi
 # schedule the next start-up and then shutdown
 #--------------------------------------------
 clear
-echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
-sleep 5s
+# Test whether to start TrapCam
+if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ]; then
+	echo "Monitor is plugged in"
+	echo "TrapCam will not start. Exiting to CLI..."
+	exit 0
+else
 
-rf="run.log"
+	echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
+	sleep 5s
 
-timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
+	rf="run.log"
 
-if [ $? -eq 124 ]; then
-  	sudo echo "TrapCam.sh timed out. Scheduling next start-up from .bashrc" |& tee -a "${rf}"
+	timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
+
+	if [ $? -ge 124 ]; then
+  		sudo echo "TrapCam.sh timed out. Scheduling next start-up from .bashrc" |& tee -a "${rf}"
 	
-	if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
-		sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
-		sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
-	else
-		if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
-			sudo cp /home/pi/wittyPi/schedules/TrapCam_5AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
-			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
-		else
+		if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
 			sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
 			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
+		else
+			if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
+				sudo cp /home/pi/wittyPi/schedules/TrapCam_5AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
+				sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
+			else
+				sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
+				sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
+			fi
 		fi
-	fi
 	sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}" 
 	
 	echo "rPi will shutdown in 5 seconds. ^C to stop shutdown..."
 	sleep 5s
 	sudo shutdown now -h
-else
+	else
 
-	sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}"
+		sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}"
 	
-	echo "rPi will shutdown in 5 seconds. ^C to stop shutdown..."
-	sleep 5s
-	sudo shutdown now -h
+		echo "rPi will shutdown in 5 seconds. ^C to stop shutdown..."
+		sleep 5s
+		sudo shutdown now -h
+	fi
 fi
 #---------------------------------------------
