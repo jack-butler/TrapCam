@@ -26,29 +26,33 @@ if [ $? -ne 0 ]; then
 fi
 
 # ----------------------------------------------------------
-# Pull TrapCam software from GitHub
+# Install TrapCam Software
 # ----------------------------------------------------------
-git clone https://github.com/jack-butler/TrapCam
 clear
-
-cd TrapCam/
+echo "--------------------------------------------------------------------------------"
+echo "|																				  |"
+echo "|																				  |"
+echo "| 						Installing TrapCam software							  |"
+echo "|																				  |"
+echo "|																				  |"
+echo "---------------------------------------------------------------------------------"
 
 # ----------------------------------------------------------
 # Copy configs
 # ----------------------------------------------------------
 cd configs/
 
-sudo cp /boot/cmdline.txt /boot/cmdline.txt.old
-sudo cp cmdline.txt /boot/cmdline.txt
+sudo cp /boot/cmdline.txt /boot/cmdline.txt.old 2>$1 /dev/null
+sudo cp cmdline.txt /boot/cmdline.txt 2>$1 /dev/null
 
-sudo cp /boot/config.txt /boot/config.txt.old
-sudo cp config.txt /boot/config.txt
+sudo cp /boot/config.txt /boot/config.txt.old 2>$1 /dev/null
+sudo cp config.txt /boot/config.txt 2>$1 /dev/null
 
-sudo cp ~/.bashrc ~/.bashrc.old
-sudo cp .bashrc ~/.bashrc
+sudo cp ~/.bashrc ~/.bashrc.old 2>$1 /dev/null
+sudo cp .bashrc ~/.bashrc 2>$1 /dev/null
 
-sudo cp /etc/rc.local /etc/rc.local.old
-sudo cp rc.local /etc/rc.local
+sudo cp /etc/rc.local /etc/rc.local.old 2>$1 /dev/null
+sudo cp rc.local /etc/rc.local 2>$1 /dev/null
 
 cd ..
 
@@ -57,17 +61,17 @@ cd ..
 # ----------------------------------------------------------
 cd services/
 
-sudo cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
-sudo cp autologin@.service /etc/systemd/system/autologin@.service
+sudo cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old 2>$1 /dev/null
+sudo cp autologin@.service /etc/systemd/system/autologin@.service 2>$1 /dev/null
 
-sudo cp image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
-sudo cp splashscreen.service /etc/systemd/system/splashscreen.service
+sudo cp image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service 2>$1 /dev/null
+sudo cp splashscreen.service /etc/systemd/system/splashscreen.service 2>$1 /dev/null
 
-sudo systemctl enable splashscreen.service
-sudo systemctl start splashscreen.service
+sudo systemctl enable splashscreen.service 2>$1 /dev/null
+sudo systemctl start splashscreen.service 2>$1 /dev/null
 
-sudo systemctl enable image_on_shutdown.service
-sudo systemctl start image_on_shutdown.service
+sudo systemctl enable image_on_shutdown.service 2>$1 /dev/null
+sudo systemctl start image_on_shutdown.service 2>$1 /dev/null
 
 cd ..
 
@@ -76,7 +80,7 @@ cd ..
 # ----------------------------------------------------------
 cd schedules/
 
-sudo cp TrapCam_* ~/wittyPi/schedules/
+sudo cp TrapCam_* ~/wittyPi/schedules/ 2>$1 /dev/null
 
 cd ..
 
@@ -85,22 +89,22 @@ cd ..
 # ----------------------------------------------------------
 cd scripts/
 
-sudo cp TrapCam.sh ~/TrapCam.sh
-sudo cp shutdown_now.sh ~/shutdown_now.sh
+sudo cp TrapCam.sh ~/TrapCam.sh 2>$1 /dev/null
+sudo cp shutdown_now.sh ~/shutdown_now.sh 2>$1 /dev/null
 
 cd ..
 
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-sudo cp splash.png /etc/splash.png
+sudo cp splash.png /etc/splash.png 2>$1 /dev/null
 
 # ----------------------------------------------------------
 # Make USB mount location
 # ----------------------------------------------------------
 cd /media
-sudo mkdir DATA
-sudo chown -R pi:pi /media/DATA
+sudo mkdir DATA 2>$1 /dev/null
+sudo chown -R pi:pi /media/DATA 2>$1 /dev/null
 
 # ----------------------------------------------------------
 # Finish install
