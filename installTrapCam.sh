@@ -42,9 +42,7 @@ echo "--------------------------------------------------------------------------
 # ----------------------------------------------------------
 cd configs/
 
-cp /boot/cmdline.txt /boot/cmdline.txt.old
-cp cmdline.txt /boot/cmdline.txt
-
+echo " logo.nologo quiet splash loglevel=0" | tee -a /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
 cp config.txt /boot/config.txt
 
