@@ -45,23 +45,23 @@ cd $HOME
 cp /boot/cmdline.txt /boot/cmdline.txt.old
 echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" > /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
-cp TrapCam/configs/config.txt /boot/config.txt
+cp $HOME/TrapCam/configs/config.txt /boot/config.txt
 
 cp .bashrc .bashrc.old
-cp TrapCam/configs/.bashrc .
+cp $HOME/TrapCam/configs/.bashrc .
 
 cp /etc/rc.local /etc/rc.local.old
-cp TrapCam/configs/rc.local /etc/rc.local
+cp $HOME/TrapCam/configs/rc.local /etc/rc.local
 
 # ----------------------------------------------------------
 # Copy and install services
 # ----------------------------------------------------------
 
 cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
-cp TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
+cp $HOME/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
 
-cp TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
-cp TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
+cp $HOME/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
+cp $HOME/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
 
 systemctl enable splashscreen.service
 systemctl start splashscreen.service
@@ -84,13 +84,13 @@ cd $HOME
 # Copy shell scripts
 # ----------------------------------------------------------
 
-cp TrapCam/TrapCam.sh .
-cp TrapCam/shutdown_now.sh .
+cp $HOME/TrapCam/TrapCam.sh .
+cp $HOME/TrapCam/shutdown_now.sh .
 
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-cp TrapCam/splash.png /etc/splash.png
+cp $HOME/TrapCam/splash.png /etc/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location
