@@ -117,7 +117,6 @@ fi
 # schedule the next start-up and then shutdown
 #--------------------------------------------
 clear
-sudo wittyPi/syncTime.sh
 
 # Test whether to start TrapCam
 if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ]; then
@@ -125,7 +124,7 @@ if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ]; th
 	echo "TrapCam will not start. Exiting to CLI..."
 	exit 0
 else
-
+	sudo wittyPi/syncTime.sh
 	echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
 	sleep 5s
 
