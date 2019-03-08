@@ -37,35 +37,31 @@ echo "|"
 echo "|"
 echo "---------------------------------------------------------------------------------"
 
-cd TrapCam
+cd $HOME
 # ----------------------------------------------------------
 # Copy configs
 # ----------------------------------------------------------
-cd configs/
 
 cp /boot/cmdline.txt /boot/cmdline.txt.old
 echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" > /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
-cp config.txt /boot/config.txt
+cp TrapCam/configs/config.txt /boot/config.txt
 
-cp $HOME/.bashrc $HOME/.bashrc.old
-cp .bashrc $HOME/.bashrc
+cp .bashrc .bashrc.old
+cp TrapCam/configs/.bashrc .
 
 cp /etc/rc.local /etc/rc.local.old
-cp rc.local /etc/rc.local
-
-cd ..
+cp TrapCam/configs/rc.local /etc/rc.local
 
 # ----------------------------------------------------------
 # Copy and install services
 # ----------------------------------------------------------
-cd services/
 
 cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
-cp autologin@.service /etc/systemd/system/autologin@.service
+cp TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
 
-cp image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
-cp splashscreen.service /etc/systemd/system/splashscreen.service
+cp TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
+cp TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
 
 systemctl enable splashscreen.service
 systemctl start splashscreen.service
@@ -78,26 +74,23 @@ cd ..
 # ----------------------------------------------------------
 # Copy schedule scripts
 # ----------------------------------------------------------
-cd schedules/
+cd $HOME/wittyPi/schedules
 
-cp TrapCam_* $HOME/wittyPi/schedules/
+cp $HOME/TrapCam/TrapCam_* .
 
-cd ..
+cd $HOME
 
 # ----------------------------------------------------------
 # Copy shell scripts
 # ----------------------------------------------------------
-cd scripts/
 
-cp TrapCam.sh $HOME/TrapCam.sh
-cp shutdown_now.sh $HOME/shutdown_now.sh
-
-cd ..
+cp TrapCam/TrapCam.sh .
+cp TrapCam/shutdown_now.sh .
 
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-cp splash.png /etc/splash.png
+cp TrapCam/splash.png /etc/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location
@@ -109,11 +102,11 @@ chown -R pi:pi /media/DATA
 # ----------------------------------------------------------
 # Finish install
 # ----------------------------------------------------------
-cd ~
-echo "---------------------------------------------------------------"
+cd $HOME
+echo "-------------------------------------------------------------------------------"
 echo ""
 echo "TrapCam software has been installed and will start upon reboot"
 echo ""
-echo "---------------------------------------------------------------"
+echo "-------------------------------------------------------------------------------"
 
 exit 0
