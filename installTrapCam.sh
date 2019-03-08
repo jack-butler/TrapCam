@@ -108,7 +108,6 @@ chown -R pi:pi /media/DATA
 # Finish install
 # ----------------------------------------------------------
 cd ~
-clear
 echo "---------------------------------------------------------------"
 echo ""
 echo "TrapCam software has been installed and will start upon reboot"
