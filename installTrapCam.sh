@@ -78,7 +78,7 @@ cd ..
 # ----------------------------------------------------------
 cd $WD/wittyPi/schedules
 
-cp $WD/TrapCam/TrapCam_* .
+cp $WD/TrapCam/TrapCam_*.wpi .
 
 cd $WD
 
@@ -86,8 +86,8 @@ cd $WD
 # Copy shell scripts
 # ----------------------------------------------------------
 
-cp $WD/TrapCam/TrapCam.sh .
-cp $WD/TrapCam/shutdown_now.sh .
+cp $WD/TrapCam/scripts/TrapCam.sh .
+cp $WD/TrapCam/scripts/shutdown_now.sh .
 
 # ----------------------------------------------------------
 # Copy splashscreen image
