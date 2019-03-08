@@ -30,20 +30,21 @@ fi
 # ----------------------------------------------------------
 clear
 echo "--------------------------------------------------------------------------------"
-echo "|																				  |"
-echo "|																				  |"
-echo "| 						Installing TrapCam software							  |"
-echo "|																				  |"
-echo "|																				  |"
+echo "|"
+echo "|"
+echo "| 	Installing TrapCam software"
+echo "|"
+echo "|"
 echo "---------------------------------------------------------------------------------"
 
+cd TrapCam
 # ----------------------------------------------------------
 # Copy configs
 # ----------------------------------------------------------
 cd configs/
 
 cp /boot/cmdline.txt /boot/cmdline.txt.old
-echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" | tee /boot/cmdline.txt
+echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" > /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
 cp config.txt /boot/config.txt
 
