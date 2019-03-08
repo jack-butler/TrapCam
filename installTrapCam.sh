@@ -78,7 +78,7 @@ cd ..
 # ----------------------------------------------------------
 cd $WD/wittyPi/schedules
 
-cp $WD/TrapCam/TrapCam_*.wpi .
+cp $WD/TrapCam/schedules/TrapCam_* .
 
 cd $WD
 
