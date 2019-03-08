@@ -42,12 +42,13 @@ echo "--------------------------------------------------------------------------
 # ----------------------------------------------------------
 cd configs/
 
-echo " logo.nologo quiet splash loglevel=0" | tee -a /boot/cmdline.txt
+cp /boot/cmdline.txt /boot/cmdline.txt.old
+echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" | tee /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
 cp config.txt /boot/config.txt
 
-cp ~/.bashrc ~/.bashrc.old
-cp .bashrc ~/.bashrc
+cp $HOME/.bashrc $HOME/.bashrc.old
+cp .bashrc $HOME/.bashrc
 
 cp /etc/rc.local /etc/rc.local.old
 cp rc.local /etc/rc.local
@@ -78,7 +79,7 @@ cd ..
 # ----------------------------------------------------------
 cd schedules/
 
-cp TrapCam_* ~/wittyPi/schedules/
+cp TrapCam_* $HOME/wittyPi/schedules/
 
 cd ..
 
@@ -87,8 +88,8 @@ cd ..
 # ----------------------------------------------------------
 cd scripts/
 
-cp TrapCam.sh ~/TrapCam.sh
-cp shutdown_now.sh ~/shutdown_now.sh
+cp TrapCam.sh $HOME/TrapCam.sh
+cp shutdown_now.sh $HOME/shutdown_now.sh
 
 cd ..
 
@@ -101,7 +102,7 @@ cp splash.png /etc/splash.png
 # Make USB mount location
 # ----------------------------------------------------------
 cd /media
-mkdir DATA 2>$1 /dev/null
+mkdir DATA
 chown -R pi:pi /media/DATA
 
 # ----------------------------------------------------------
