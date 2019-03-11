@@ -13,16 +13,17 @@
 # ----------------------------------------------------------
 git --version
 if [ $? -ne 0 ]; then
-	echo "Git is not installed. Please install git and try again."
+	echo "Git is not installed. Please install git, reboot and try again."
 	echo "Exiting TrapCam install..."
 	exit 1
 fi
 
 fbi --version
 if [ $? -ne 0 ]; then
-	echo "fbi package not installed. Please install fbi and try again."
-	echo "Exiting TrapCam install..."
-	exit 1
+	echo "fbi package is not currently installed."
+	echo "Installing fbi package now..."
+	apt update
+	echo "y" | apt install fbi
 fi
 
 # ----------------------------------------------------------
