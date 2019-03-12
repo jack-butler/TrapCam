@@ -10,12 +10,12 @@
 
 clear
 echo "--------------------------------------------------------------------------------"
-echo "|																				  |"
-echo "|																				  |"
-echo "| 							Welcome to TrapCam								  |"
-echo "|																				  |"
-echo "|																				  |"
-echo "----------------$(date)--------------------------------------------"
+echo "|"
+echo "|"
+echo "|		Welcome to TrapCam"
+echo "|"
+echo "|"
+echo "----------------$(date)----------------------"
 
 
 # -----------------------------------------------------------------------
@@ -42,11 +42,18 @@ for usb in $(ls /dev/disk/by-label | grep -E -v 'boot|root')
 do
 	sudo mount /dev/disk/by-label/$usb /media/DATA |& tee -a "${rf}"
 	# if disk usage is 90% or less, break the loop and use the disk
-	if [ $(df --total /media/DATA | grep -E total | cut -c42-44) -le 90 ]; then
+	if [ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -le 240000000 ]; then
 		echo "Video recording stored to $usb" |& tee -a "${rf}"
 		break
+	else
+		sudo umount /media/DATA
 	fi
 done
+
+if [ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -gt 240000000 ]; then
+	echo "All disks are full. Switching to internal storage..." |& tee -a "${rf}"
+	sudo umount /media/DATA
+fi
 
 # -----------------------------------------------------------------------
 # Turn on lights, if necessary
