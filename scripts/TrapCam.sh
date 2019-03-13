@@ -63,25 +63,27 @@ done
 # -----------------------------------------------------------------------
 # Turn on lights, if necessary
 # -----------------------------------------------------------------------
-if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
-	if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
-		echo "Time is between 19:00 and 07:00. Turning on lights..." |& tee -a "${rf}"
+if [ -s nolights.txt ]; then
+	if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
+		if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
+			echo "Time is between 19:00 and 07:00. Turning on lights..." |& tee -a "${rf}"
 		
-		gpio mode 25 out
-		gpio write 25 1
+			gpio mode 25 out
+			gpio write 25 1
+		else
+			echo "It's daytime; no need for lights..." |& tee -a "${rf}"
+
+			gpio mode 25 out
+			gpio write 25 0 # for good measure
+		fi
 	else
-		echo "It's daytime; no need for lights..." |& tee -a "${rf}"
+		echo "Battery considerations preclude using lights..." |& tee -a "${rf}"
 
 		gpio mode 25 out
 		gpio write 25 0 # for good measure
 	fi
-else
-	echo "Battery considerations preclude using lights..." |& tee -a "${rf}"
-
-	gpio mode 25 out
-	gpio write 25 0 # for good measure
 fi
-
+	
 # -----------------------------------------------------------------------
 # Take video
 # -----------------------------------------------------------------------
