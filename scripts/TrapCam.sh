@@ -52,7 +52,7 @@ done
 
 # check whether a usb is mounted to /media/DATA
 if mountpoint -q /media/DATA; then
-
+	# Don't do anything; all is well
 else
 	echo "All USB drives are full. Video stored to SD card on /media/DATA"
 fi
