@@ -41,7 +41,7 @@ fi
 for usb in $(ls /dev/disk/by-label | grep -E -v 'boot|root')
 do
 	sudo mount /dev/disk/by-label/$usb /media/DATA |& tee -a "${rf}"
-	# if disk usage is 90% or less, break the loop and use the disk
+	# if disk usage is 240GB or less, break the loop and use the disk
 	if [ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -le 240000000 ]; then
 		echo "Video recording stored to $usb" |& tee -a "${rf}"
 		break
@@ -50,16 +50,21 @@ do
 	fi
 done
 
-if [ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -gt 240000000 ]; then
-	echo "All disks are full. Switching to internal storage..." |& tee -a "${rf}"
-	sudo umount /media/DATA
-fi
+# check whether a usb is mounted to /media/DATA
+for usb in $(ls /dev/disk/by-label | grep -E -v 'boot|root')
+do
+	if ismounted "/dev/disk/by-label/$usb"
+		break
+	else
+		echo "All USB drives are full. Video stored to SD card on /media/DATA"
+	fi
+done
 
 # -----------------------------------------------------------------------
 # Turn on lights, if necessary
 # -----------------------------------------------------------------------
 if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
-	if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
+	if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
 		echo "Time is between 19:00 and 07:00. Turning on lights..." |& tee -a "${rf}"
 		
 		gpio mode 25 out
