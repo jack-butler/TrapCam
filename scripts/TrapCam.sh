@@ -51,14 +51,11 @@ do
 done
 
 # check whether a usb is mounted to /media/DATA
-for usb in $(ls /dev/disk/by-label | grep -E -v 'boot|root')
-do
-	if ismounted "/dev/disk/by-label/$usb"
-		break
-	else
-		echo "All USB drives are full. Video stored to SD card on /media/DATA"
-	fi
-done
+if mountpoint -q /media/DATA; then
+
+else
+	echo "All USB drives are full. Video stored to SD card on /media/DATA"
+fi
 
 # -----------------------------------------------------------------------
 # Turn on lights, if necessary
