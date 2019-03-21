@@ -31,6 +31,7 @@ echo "" |& tee -a "${rf}"
 echo "Start time of TrapCam.sh: $start" |& tee -a "${rf}"
 
 if ! [ -s nolights.txt ]; then
+	# Change +6 days to however long lights should run after initial start-up
 	echo $(date +%s -d "+6 days 19:00:00") > nolights.txt
 	echo "Lights will not turn on after $(date -d '+6 days 19:00:00')" |& tee -a "${rf}"
 fi
@@ -42,7 +43,7 @@ for usb in $(ls /dev/disk/by-label | grep -E -v 'boot|root')
 do
 	sudo mount /dev/disk/by-label/$usb /media/DATA |& tee -a "${rf}"
 	# if disk usage is 240GB or less, break the loop and use the disk
-	if [ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -le 240000000 ]; then
+	if [[ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -le 240000000 ]]; then
 		echo "Video recording stored to $usb" |& tee -a "${rf}"
 		break
 	else
@@ -52,9 +53,9 @@ done
 
 # check whether a usb is mounted to /media/DATA
 if mountpoint -q /media/DATA; then
-	# Don't do anything; all is well
+	echo "" # Don't do anything; all is well
 else
-	echo "All USB drives are full. Video stored to SD card on /media/DATA"
+	echo "All USB drives are full. Video stored to SD card on /media/DATA" |& tee -a "${rf}"
 fi
 
 # -----------------------------------------------------------------------
@@ -63,7 +64,7 @@ fi
 if [ -s nolights.txt ]; then
 	if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
 		if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
-			echo "Time is between 19:00 and 07:00. Turning on lights..." |& tee -a "${rf}"
+			echo "Time is between 18:00 and 08:00. Turning on lights..." |& tee -a "${rf}"
 		
 			gpio mode 25 out
 			gpio write 25 1
@@ -79,6 +80,19 @@ if [ -s nolights.txt ]; then
 		gpio mode 25 out
 		gpio write 25 0 # for good measure
 	fi
+else
+	# If nolights.txt doesn't exist, just cycle the lights like normal
+	if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
+			echo "Time is between 18:00 and 08:00. Turning on lights..." |& tee -a "${rf}"
+		
+			gpio mode 25 out
+			gpio write 25 1
+		else
+			echo "It's daytime; no need for lights..." |& tee -a "${rf}"
+
+			gpio mode 25 out
+			gpio write 25 0 # for good measure
+		fi
 fi
 	
 # -----------------------------------------------------------------------
@@ -104,21 +118,27 @@ cd /home/pi
 # -----------------------------------------------------------------------
 echo "Scheduling next start-up..." |& tee -a "${rf}"
 
-if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
-# It's within the window when the lights are still cycled on, so run the
-# 50% duty cycle schedule
-	sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
-	sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
-else
-# Lights no longer come on at night, so no need to turn the camera on at
-# night either
-	if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
-		sudo cp /home/pi/wittyPi/schedules/TrapCam_5AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
-		sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
-	else
+if [ -s /home/pi/nolights.txt ]; then
+	if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
+	# It's within the window when the lights are still cycled on, so run the
+	# 50% duty cycle schedule
 		sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
 		sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
+	else
+	# Lights no longer come on at night, so no need to turn the camera on at
+	# night either
+		if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
+			sudo cp /home/pi/wittyPi/schedules/TrapCam_5AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
+			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
+		else
+			sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
+			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
+		fi
 	fi
+else
+	# nolights.txt wasn't created at start-up, so just copy the regular duty cycle
+	sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
+	sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
 fi
 
 # -----------------------------------------------------------------------
