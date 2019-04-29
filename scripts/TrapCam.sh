@@ -4,7 +4,7 @@
 
 # Author: Jack Butler
 # Created: Feb 2019
-# Last Edit: J Butler Feb 2019
+# Last Edit: J Butler Apr 2019
 
 # Take video from camera, turn on/off lights, schedule next rPi start-up
 
@@ -15,7 +15,7 @@ echo "|"
 echo "|		Welcome to TrapCam"
 echo "|"
 echo "|"
-echo "----------------$(date)----------------------"
+echo "----------------$(date)-------------------------"
 
 
 # -----------------------------------------------------------------------
@@ -32,8 +32,8 @@ echo "Start time of TrapCam.sh: $start" |& tee -a "${rf}"
 
 if ! [ -s nolights.txt ]; then
 	# Change +6 days to however long lights should run after initial start-up
-	echo $(date +%s -d "+6 days 19:00:00") > nolights.txt
-	echo "Lights will not turn on after $(date -d '+6 days 19:00:00')" |& tee -a "${rf}"
+	echo $(date +%s -d "+6 days 18:00:00") > nolights.txt
+	echo "Lights will not turn on after $(date -d '+6 days 18:00:00')" |& tee -a "${rf}"
 fi
 
 # -----------------------------------------------------------------------
@@ -127,8 +127,8 @@ if [ -s /home/pi/nolights.txt ]; then
 	else
 	# Lights no longer come on at night, so no need to turn the camera on at
 	# night either
-		if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
-			sudo cp /home/pi/wittyPi/schedules/TrapCam_5AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
+		if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
+			sudo cp /home/pi/wittyPi/schedules/TrapCam_8AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
 			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
 		else
 			sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
