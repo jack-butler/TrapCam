@@ -1,5 +1,5 @@
 # TrapCam
-The TrapCam repository contains software to construct a TrapCam.
+The TrapCam repository contains instructions and software to construct a TrapCam.
 
 # Initial set up
 # 
