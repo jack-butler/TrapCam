@@ -19,7 +19,7 @@ to the screen.
 
 # Configure the rPI
 # 
-You'll probably be asked to log in upon first boot. Username = pi
+You'll probably be asked to log in upon first boot. Username = pi,
 Password = raspberry
 
 Once logged in, run "sudo raspi-config" to access the configuration
@@ -72,8 +72,8 @@ correct locations.
 
 The TrapCam software comes with default schedule scripts that duty cycle the rPi. The 
 first schedule (TrapCam_duty_cycle.wpi) turns the rPi on for 5 minutes on the 10s - 
-that is, at :00, :10, :20 minutes past the hour, 24 hours a day. The second schedule
-(TrapCam_5AM_wakeup.wpi) is used once battery limitations preclude using underwater 
+that is, at :00, :10, :20 minutes, etc. past the hour, 24 hours a day. The second schedule
+(TrapCam_8AM_wakeup.wpi) is used once battery limitations preclude using underwater 
 lights, and runs the rPi on the same duty cycle above, just between the hours of 7AM and
 7PM. 
 
@@ -96,7 +96,7 @@ If you're system doesn't have lights, or if you have enough battery to power the
 past the one week limit, you can alter the TrapCam.sh code. Lines 33-36 provide an
 if-statement to tell the rPi at what date to no longer turn on the lights. To alter the
 length of time that lights are powered, change the "+6 days" on Line 35 to however long
-you think your batteries can power the lights (that is, how long the can provide greater
+you think your batteries can power the lights (that is, how long they can provide greater
 than 12V). If you aren't running TrapCam with lights at all, simply comment out or remove
 Lines 33-36 and the script will skip turning on lights.
 
