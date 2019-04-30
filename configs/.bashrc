@@ -123,6 +123,10 @@ sleep 1s
 echo "Testing whether to start TrapCam..."
 if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ]; then
 	echo "Monitor is plugged in"
+	echo "Removing nolights.txt from $HOME"
+	if [ -s nolights.txt ]; then
+		sudo rm nolights.txt
+	fi
 	echo "TrapCam will not start. Exiting to CLI..."
 else
 	sudo wittyPi/syncTime.sh
