@@ -4,7 +4,8 @@
 
 # Author: Jack Butler
 # Created: Feb 2019
-# Last Edit: J Butler Apr 2019
+# Last Edit: J Butler May 2019
+# Edit Comments: Fixed issue with mounting USB
 
 # Take video from camera, turn on/off lights, schedule next rPi start-up
 
@@ -43,17 +44,18 @@ for usb in $(ls /dev/disk/by-label | grep -E -v 'boot|root')
 do
 	sudo mount /dev/disk/by-label/$usb /media/DATA |& tee -a "${rf}"
 	# if disk usage is 240GB or less, break the loop and use the disk
-	if [[ $(df --total /media/DATA | grep -E total | cut --delimiter=' ' -f12) -le 240000000 ]]; then
+	if [[ $(df --total /media/DATA | awk '$1=="total"{print$3}') -le 240000000 ]]; then
 		echo "Video recording stored to $usb" |& tee -a "${rf}"
 		break
 	else
+		echo "$usb is full. Unmounting..."
 		sudo umount /media/DATA
 	fi
 done
 
 # check whether a usb is mounted to /media/DATA
 if mountpoint -q /media/DATA; then
-	echo "" # Don't do anything; all is well
+	echo "Writing video to $(lsblk -o label,mountpoint | grep -E /media/DATA | cut --delimiter=' ' -f1)"
 else
 	echo "All USB drives are full. Video stored to SD card on /media/DATA" |& tee -a "${rf}"
 fi
@@ -61,8 +63,11 @@ fi
 # -----------------------------------------------------------------------
 # Turn on lights, if necessary
 # -----------------------------------------------------------------------
+
 if [ -s nolights.txt ]; then
 	if [ $(date +%s) -le $(cat /home/pi/nolights.txt) ]; then
+	# To change the timing of the lights on/off cycle, change the 18 & 8 in the 
+	# test command below to the hours at which the lights should turn on or off
 		if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
 			echo "Time is between 18:00 and 08:00. Turning on lights..." |& tee -a "${rf}"
 		
@@ -82,6 +87,7 @@ if [ -s nolights.txt ]; then
 	fi
 else
 	# If nolights.txt doesn't exist, just cycle the lights like normal
+	# As above, change the 18 & 8 to change the timing of the lights on/off cycle
 	if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
 			echo "Time is between 18:00 and 08:00. Turning on lights..." |& tee -a "${rf}"
 		
@@ -107,7 +113,7 @@ echo "Video recording started at $(date +%T)" |& tee -a "${rf}"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 timeout --signal=SIGKILL 360 \
-	raspivid -o $vidname.h264 -t 300000 -md 2 -fps 15 -vf -hf -a 12 -n
+	raspivid -o $vidname.h264 -t 300000 -md 2 -vf -hf -a 12 -n
 
 echo "Video recording ended at $(date +%T)" |& tee -a "${rf}"
 echo "" |& tee -a "${rf}"
