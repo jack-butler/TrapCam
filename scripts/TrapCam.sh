@@ -7,7 +7,7 @@
 # Author: Jack Butler
 # Created: Feb 2019
 # Last Edit: J Butler Jun 2019
-# Edit Comments: Only turn camera 
+# Edit Comments: Only turn camera on during daylight hours (0530 - 1900)
 
 # Take video from camera, turn on/off lights, schedule next rPi start-up
 
@@ -137,7 +137,7 @@ if [ -s /home/pi/nolights.txt ]; then
 	# Lights no longer come on at night, so no need to turn the camera on at
 	# night either
 		if [ $(date +%H) -ge 18 ] || [ $(date +%H) -lt 8 ]; then
-			sudo cp /home/pi/wittyPi/schedules/TrapCam_7AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
+			sudo cp /home/pi/wittyPi/schedules/TrapCam_530AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
 			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
 		else
 			sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi
@@ -146,8 +146,8 @@ if [ -s /home/pi/nolights.txt ]; then
 	fi
 else
 	# nolights.txt wasn't created at start-up, so turn the camera off at night
-	if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 7 ]; then
-			sudo cp /home/pi/wittyPi/schedules/TrapCam_7AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
+	if [ $(date +%H) -ge 19 ] || [ $(date +%H) -lt 5 ]; then
+			sudo cp /home/pi/wittyPi/schedules/TrapCam_530AM_wakeup.wpi /home/pi/wittyPi/schedule.wpi
 			sudo /home/pi/wittyPi/runScript.sh |& tee -a "${rf}"
 	else
 			sudo cp /home/pi/wittyPi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittyPi/schedule.wpi

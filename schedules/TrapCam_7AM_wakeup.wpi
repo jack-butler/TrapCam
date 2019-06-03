@@ -1,7 +1,0 @@
-# Wakes up the rPi at 7 AM every day after the lights stop working
-
-BEGIN 2015-01-01 07:00:00
-END 2025-12-31 23:59:59
-
-ON H14 WAIT
-OFF H10
