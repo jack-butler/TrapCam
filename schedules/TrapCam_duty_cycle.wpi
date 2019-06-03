@@ -1,4 +1,4 @@
-# Turns on the TrapCam every 10 mins to record video for 5 minutes
+# Turns on the TrapCam every 10 mins to record video for 2.5 minutes
 
 BEGIN 2015-08-01 00:00:00
 END 2025-07-31 23:59:59
@@ -7,5 +7,5 @@ END 2025-07-31 23:59:59
 # Will start every 10 mins, as long as schedule wasn't missed from last shut down
 # Allows swapping of batteries during the OFF state
 
-ON M8 WAIT
-OFF M2
+ON M5 WAIT
+OFF M5
