@@ -121,7 +121,7 @@ sleep 1s
 # Test whether to start TrapCam
 echo "Testing whether to start TrapCam..."
 if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ] || \
-   [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12001a ] \
+   [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12001a ] || \
    [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0xa ]; then
 	echo "Monitor is plugged in"
 	echo "TrapCam will not start. Exiting to CLI..."
