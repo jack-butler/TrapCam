@@ -3,9 +3,9 @@
 BEGIN 2015-08-01 00:00:00
 END 2025-07-31 23:59:59
 
-# Turn the rPi on for "6 min" and wait for shutdown
+# Turn the rPi on for "4 min" and wait for shutdown
 # Will start every 10 mins, as long as schedule wasn't missed from last shut down
 # Allows swapping of batteries during the OFF state
 
-ON M8 WAIT
-OFF M2
+ON M4 WAIT
+OFF M6
