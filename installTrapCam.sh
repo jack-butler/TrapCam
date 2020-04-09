@@ -48,8 +48,8 @@ echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" > /boot/cmdl
 cp /boot/config.txt /boot/config.txt.old
 cp /home/pi/TrapCam/configs/config.txt /boot/config.txt
 
-cp .bashrc .bashrc.old
-cp /home/pi/TrapCam/configs/.bashrc .
+cp /home/pi/.bashrc /home/pi/.bashrc.old
+cp /home/pi/TrapCam/configs/.bashrc /home/pi/
 
 cp /etc/rc.local /etc/rc.local.old
 cp /home/pi/TrapCam/configs/rc.local /etc/rc.local
