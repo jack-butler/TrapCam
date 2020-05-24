@@ -63,7 +63,7 @@ else
 
 	gpio mode 25 out
 	gpio write 25 0 # for good measure
-	
+
 fi
 
 # -----------------------------------------------------------------------
@@ -73,12 +73,11 @@ vidname=$(date +%Y%m%d%H%M%S)
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 cd /media/DATA
-echo "TrapCam started at $start" |& tee -a "${rf}"
 echo "Video recording started at $(date +%T)" |& tee -a "${rf}"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 timeout --signal=SIGKILL 360 \
-	raspivid -o $vidname.h264 -t 300000 -md 4 -vf -hf \
+	raspivid -o $vidname.h264 -t 300000 -md 4 -fps 15 \
 		-a 4 -a "$HOSTNAME %X %Y/%m/%d" -n
 
 echo "Video recording ended at $(date +%T)" |& tee -a "${rf}"
