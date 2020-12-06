@@ -4,7 +4,8 @@
 
 # Author: Jack Butler
 # Created: March 2019
-# Last Edit: J Butler March 2019
+# Last Edit: J Butler Apr 2020
+# Comments: Fixes wittypi 3 directory changes
 
 # Installs TrapCam dependencies, shell scripts, and configs
 
@@ -30,17 +31,13 @@ fi
 # Install TrapCam Software
 # ----------------------------------------------------------
 clear
-echo "--------------------------------------------------------------------------------"
-echo "|"
-echo "|"
-echo "| 	Installing TrapCam software"
-echo "|"
-echo "|"
-echo "--------------------------------------------------------------------------------"
+echo ' .___________..______          ___      .______     ______     ___      .___  ___. '
+echo ' |           ||   _  \        /   \     |   _  \   /      |   /   \     |   \/   | '
+echo ' `---|  |----`|  |_)  |      /  ^  \    |  |_)  | |  ,----   /  ^  \    |  \  /  | '
+echo '     |  |     |      /      /  /_\  \   |   ___/  |  |      /  /_\  \   |  |\/|  | '
+echo '     |  |     |  |\  \----./  _____  \  |  |      |  `----./  _____  \  |  |  |  | '
+echo '     |__|     | _| `._____/__/     \__\ | _|       \______/__/     \__\ |__|  |__| '
 
-cd /home/
-WD=/home/$(ls)
-cd $WD
 # ----------------------------------------------------------
 # Copy configs
 # ----------------------------------------------------------
@@ -49,13 +46,13 @@ echo "Copying config files. Previous cmdline, config, bashrc, and rclocal files 
 cp /boot/cmdline.txt /boot/cmdline.txt.old
 echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" > /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
-cp $WD/TrapCam/configs/config.txt /boot/config.txt
+cp /home/pi/TrapCam/configs/config.txt /boot/config.txt
 
-cp .bashrc .bashrc.old
-cp $WD/TrapCam/configs/.bashrc .
+cp /home/pi/.bashrc /home/pi/.bashrc.old
+cp /home/pi/TrapCam/configs/.bashrc /home/pi/
 
 cp /etc/rc.local /etc/rc.local.old
-cp $WD/TrapCam/configs/rc.local /etc/rc.local
+cp /home/pi/TrapCam/configs/rc.local /etc/rc.local
 
 echo "Done copying configs"
 # ----------------------------------------------------------
@@ -64,10 +61,10 @@ echo "Done copying configs"
 echo "Copying and installing services..."
 
 cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
-cp $WD/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
+cp /home/pi/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
 
-cp $WD/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
-cp $WD/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
+cp /home/pi/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
+cp /home/pi/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
 
 systemctl enable splashscreen.service
 systemctl start splashscreen.service
@@ -75,19 +72,17 @@ systemctl start splashscreen.service
 systemctl enable image_on_shutdown.service
 systemctl start image_on_shutdown.service
 
-cd ..
-
 echo "Done creating boot and shutdown services"
 # ----------------------------------------------------------
 # Copy schedule scripts
 # ----------------------------------------------------------
 echo "Copying wittyPi schedule scripts..."
 
-cd $WD/wittyPi/schedules
+cd /home/pi/wittypi/schedules
 
-cp $WD/TrapCam/schedules/TrapCam_* .
+cp /home/pi/TrapCam/schedules/TrapCam_* .
 
-cd $WD
+cd /home/pi
 
 echo "Done copying schedules..."
 # ----------------------------------------------------------
@@ -95,14 +90,17 @@ echo "Done copying schedules..."
 # ----------------------------------------------------------
 echo "Copying TrapCam shell scripts..."
 
-cp $WD/TrapCam/scripts/TrapCam.sh .
-cp $WD/TrapCam/scripts/shutdown_now.sh .
+cp /home/pi/TrapCam/scripts/TrapCam.sh .
+cp /home/pi/TrapCam/scripts/schedule_duty_cycle.sh .
+
+chmod +x TrapCam.sh
+chmod +x schedule_duty_cycle.sh
 
 echo "Done"
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-cp $WD/TrapCam/splash.png /etc/splash.png
+cp /home/pi/TrapCam/splash.png /etc/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location
@@ -120,7 +118,8 @@ fi
 # ----------------------------------------------------------
 # Finish install
 # ----------------------------------------------------------
-cd $WD
+cd /home/pi
+echo ""
 echo "-------------------------------------------------------------------------------"
 echo ""
 echo "TrapCam software has been installed and will start upon reboot"
