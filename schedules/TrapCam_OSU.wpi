@@ -1,0 +1,36 @@
+# Wakes up the rPi at 6 AM every day, and record 5 mins of video every hour until 9p
+
+BEGIN 2021-05-01 06:00:00
+END   2025-12-31 23:59:59
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   M55
+ON    M5
+OFF   H8 M55
