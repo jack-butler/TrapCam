@@ -69,7 +69,7 @@ fi
 # -----------------------------------------------------------------------
 # Take video
 # -----------------------------------------------------------------------
-vidname=$(date +%Y%m%d%H%M%S)
+vidname="${HOSTNAME}_$(date +%Y%m%d%H%M%S)"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 cd /media/DATA
@@ -77,7 +77,8 @@ echo "Video recording started at $(date +%T)" |& tee -a "${rf}"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 timeout --signal=SIGKILL 360 \
-	raspivid -o $vidname.h264 -t 300000 -md 4 -fps 15 \
+	raspivid -o $vidname.h264 -t 300000 -md 4 -fps 24 -b 0 \
+		-lev 4.2 -pf high -g 96 \
 		-a 4 -a "$HOSTNAME %X %Y/%m/%d" -n
 
 echo "Video recording ended at $(date +%T)" |& tee -a "${rf}"

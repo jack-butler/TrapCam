@@ -117,6 +117,7 @@ fi
 #--------------------------------------------
 clear
 sleep 1s
+continuous=0
 
 # Test whether to start TrapCam
 echo "Testing whether to start TrapCam..."
@@ -127,20 +128,27 @@ if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ] || 
 	echo "TrapCam will not start. Exiting to CLI..."
 else
 	sudo wittypi/syncTime.sh
+    if [ $continuous == 0 ]; then
+	    echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
+	    sleep 5s
 
-	echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
-	sleep 5s
+	    rf="run.log"
 
-	rf="run.log"
+        sudo mount /dev/sda1 /media/DATA
+        sudo ./schedule_duty_cycle.sh
+	    timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
 
-  sudo mount /dev/sda1 /media/DATA
-  sudo ./schedule_duty_cycle.sh
-	timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
+	    sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}"
 
-	sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}"
+	    echo "rPi will shutdown in 5 seconds. ^C to stop shutdown..."
+	    sleep 5s
+	    sudo shutdown now -h
 
-	echo "rPi will shutdown in 5 seconds. ^C to stop shutdown..."
-	sleep 5s
-	sudo shutdown now -h
+    elif [ $continuous == 1 ]; then
+        sudo mount /dev/sda1 /media/DATA
+        while [ $continuous == 1 ]; do
+            timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
+        done
+    fi
 fi
 #---------------------------------------------
