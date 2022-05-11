@@ -10,6 +10,12 @@
 # Installs TrapCam dependencies, shell scripts, and configs
 
 # ----------------------------------------------------------
+# Get users home dir, not roots
+# ----------------------------------------------------------
+uhome="$(getent passed $SUDO_USER | cut -d: -f6)"
+user=$SUDO_USER
+
+# ----------------------------------------------------------
 # Check whether git and fbi are installed
 # ----------------------------------------------------------
 git --version
@@ -46,13 +52,13 @@ echo "Copying config files. Previous cmdline, config, bashrc, and rclocal files 
 cp /boot/cmdline.txt /boot/cmdline.txt.old
 echo "$(cat /boot/cmdline.txt) logo.nologo quiet splash loglevel=0" > /boot/cmdline.txt
 cp /boot/config.txt /boot/config.txt.old
-cp /home/pi/TrapCam/configs/config.txt /boot/config.txt
+cp $uhome/TrapCam/configs/config.txt /boot/config.txt
 
-cp /home/pi/.bashrc /home/pi/.bashrc.old
-cp /home/pi/TrapCam/configs/.bashrc /home/pi/
+cp $uhome/.bashrc $uhome/.bashrc.old
+cp $uhome/TrapCam/configs/.bashrc /home/pi/
 
 cp /etc/rc.local /etc/rc.local.old
-cp /home/pi/TrapCam/configs/rc.local /etc/rc.local
+cp $uhome/TrapCam/configs/rc.local /etc/rc.local
 
 echo "Done copying configs"
 # ----------------------------------------------------------
@@ -61,10 +67,10 @@ echo "Done copying configs"
 echo "Copying and installing services..."
 
 cp /etc/systemd/system/autologin@.service /etc/systemd/system/autologin@.service.old
-cp /home/pi/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
+cp $uhome/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.service
 
-cp /home/pi/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
-cp /home/pi/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
+cp $uhome/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
+cp $uhome/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
 
 systemctl enable splashscreen.service
 systemctl start splashscreen.service
@@ -78,11 +84,12 @@ echo "Done creating boot and shutdown services"
 # ----------------------------------------------------------
 echo "Copying wittyPi schedule scripts..."
 
-cd /home/pi/wittypi/schedules
+cd $uhome/wittypi/schedules
 
-cp /home/pi/TrapCam/schedules/TrapCam_* .
+cp $uhome/TrapCam/schedules/TrapCam_* .
 
-cd /home/pi
+cd $uhome
+cp $uhome/wittypi/schedules/TrapCam_duty_cycle.wpi $uhome/wittypi/schedule.wpi
 
 echo "Done copying schedules..."
 # ----------------------------------------------------------
@@ -90,8 +97,8 @@ echo "Done copying schedules..."
 # ----------------------------------------------------------
 echo "Copying TrapCam shell scripts..."
 
-cp /home/pi/TrapCam/scripts/TrapCam.sh .
-cp /home/pi/TrapCam/scripts/schedule_duty_cycle.sh .
+cp $uhome/TrapCam/scripts/TrapCam.sh .
+cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh .
 
 chmod +x TrapCam.sh
 chmod +x schedule_duty_cycle.sh
@@ -100,7 +107,7 @@ echo "Done"
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-cp /home/pi/TrapCam/splash.png /etc/splash.png
+cp $uhome/TrapCam/splash.png /etc/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location
@@ -110,7 +117,7 @@ cd /media
 
 if [ ! -d "DATA" ]; then
 	mkdir DATA
-	chown -R pi:pi /media/DATA
+	chown -R $user:$user /media/DATA
 else
 	echo "Mount directory already exists"
 fi
@@ -118,7 +125,7 @@ fi
 # ----------------------------------------------------------
 # Finish install
 # ----------------------------------------------------------
-cd /home/pi
+cd $uhome
 echo ""
 echo "-------------------------------------------------------------------------------"
 echo ""

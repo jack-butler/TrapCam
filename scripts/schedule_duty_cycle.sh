@@ -11,9 +11,10 @@
 # Schedule next start-up
 # -----------------------------------------------------------------------
 rf="run.log"
+uhome="$(genet passed $SUDO_USER | cut -d: -f6)"
 
 echo "" |& tee -a "${rf}"
 echo "Scheduling next start-up..." |& tee -a "${rf}"
 
-sudo cp /home/pi/wittypi/schedules/TrapCam_duty_cycle.wpi /home/pi/wittypi/schedule.wpi
-sudo /home/pi/wittypi/runScript.sh |& tee -a "${rf}"
+sudo cp $uhome/wittypi/schedules/TrapCam_duty_cycle.wpi $uhome/wittypi/schedule.wpi
+sudo $uhome/wittypi/runScript.sh |& tee -a "${rf}"

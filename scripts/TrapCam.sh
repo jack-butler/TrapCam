@@ -23,6 +23,8 @@ echo '     |__|     | _| `._____/__/     \__\ | _|       \______/__/     \__\ |_
 # -----------------------------------------------------------------------
 
 rf="run.log"
+uhome="$(getent passed $SUDO_USER | cut -d: -f6)"
+user=$SUDO_USER
 
 echo "Start time of TrapCam.sh: $(date)" |& tee -a "${rf}"
 
@@ -69,7 +71,7 @@ fi
 # -----------------------------------------------------------------------
 # Take video
 # -----------------------------------------------------------------------
-vidname="${HOSTNAME}_$(date +%Y%m%d%H%M%S)"
+vidname="${uhome}_$(date +%Y%m%d%H%M%S)"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 cd /media/DATA
@@ -83,15 +85,15 @@ timeout --signal=SIGKILL 360 \
 
 echo "Video recording ended at $(date +%T)" |& tee -a "${rf}"
 echo "" |& tee -a "${rf}"
-cd /home/pi
+cd $uhome
 
 # -----------------------------------------------------------------------
 # Check temperature
 # -----------------------------------------------------------------------
-. /home/pi/wittypi/utilities.sh
+. $uhome/wittypi/utilities.sh
 
-cd /home/pi/wittypi && temp="$(get_temperature)"
-cd /home/pi && echo "wittyPi temperature at $(date +%T) is $temp" |& tee -a "${rf}"
+cd $uhome/wittypi && temp="$(get_temperature)"
+cd $uhome && echo "wittyPi temperature at $(date +%T) is $temp" |& tee -a "${rf}"
 
 # -----------------------------------------------------------------------
 # Clean up
