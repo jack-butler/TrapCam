@@ -12,8 +12,8 @@
 # ----------------------------------------------------------
 # Get users home dir, not roots
 # ----------------------------------------------------------
-uhome="$(getent passed $SUDO_USER | cut -d: -f6)"
-user=$SUDO_USER
+uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
+user="$(getent passwd $SUDO_USER | cut -d: -f1)"
 
 # ----------------------------------------------------------
 # Check whether git and fbi are installed
@@ -55,7 +55,7 @@ cp /boot/config.txt /boot/config.txt.old
 cp $uhome/TrapCam/configs/config.txt /boot/config.txt
 
 cp $uhome/.bashrc $uhome/.bashrc.old
-cp $uhome/TrapCam/configs/.bashrc /home/pi/
+cp $uhome/TrapCam/configs/.bashrc $uhome
 
 cp /etc/rc.local /etc/rc.local.old
 cp $uhome/TrapCam/configs/rc.local /etc/rc.local
@@ -130,6 +130,7 @@ echo ""
 echo "-------------------------------------------------------------------------------"
 echo ""
 echo "TrapCam software has been installed and will start upon reboot"
+echo "BE SURE TO SET THE WITTY PI DEFAULT STATE TO ON"
 echo ""
 echo "-------------------------------------------------------------------------------"
 

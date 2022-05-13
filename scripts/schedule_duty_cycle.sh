@@ -11,7 +11,7 @@
 # Schedule next start-up
 # -----------------------------------------------------------------------
 rf="run.log"
-uhome="$(genet passed $SUDO_USER | cut -d: -f6)"
+uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
 
 echo "" |& tee -a "${rf}"
 echo "Scheduling next start-up..." |& tee -a "${rf}"

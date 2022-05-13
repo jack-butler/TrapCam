@@ -23,8 +23,8 @@ echo '     |__|     | _| `._____/__/     \__\ | _|       \______/__/     \__\ |_
 # -----------------------------------------------------------------------
 
 rf="run.log"
-uhome="$(getent passed $SUDO_USER | cut -d: -f6)"
-user=$SUDO_USER
+uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
+user="$(getent passwd $SUDO_USER | cut -d: -f1)"
 
 echo "Start time of TrapCam.sh: $(date)" |& tee -a "${rf}"
 
@@ -71,7 +71,7 @@ fi
 # -----------------------------------------------------------------------
 # Take video
 # -----------------------------------------------------------------------
-vidname="${uhome}_$(date +%Y%m%d%H%M%S)"
+vidname="${user}_$(date +%Y%m%d%H%M%S)"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 cd /media/DATA
