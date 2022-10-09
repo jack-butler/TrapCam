@@ -81,7 +81,7 @@ echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 timeout --signal=SIGKILL 360 \
 	raspivid -o $vidname.h264 -t 300000 -md 4 -fps 24 -b 0 \
 		-lev 4.2 -pf high -g 96 \
-		-a 4 -a "$HOSTNAME %X %Y/%m/%d" -n
+		-a 4 -a "$user %X %Y/%m/%d" -n
 
 echo "Video recording ended at $(date +%T)" |& tee -a "${rf}"
 echo "" |& tee -a "${rf}"
