@@ -79,7 +79,7 @@ echo "Video recording started at $(date +%T)" |& tee -a "${rf}"
 echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
 
 timeout --signal=SIGKILL 360 \
-	python3 $uhome/record_video.py vidname -a "$user %X %Y/%m/%d"
+	python3 $uhome/record_camera.py vidname -a "$user %X %Y/%m/%d"
 
 echo "Video recording ended at $(date +%T)" |& tee -a "${rf}"
 echo "" |& tee -a "${rf}"
