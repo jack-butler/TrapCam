@@ -1,4 +1,4 @@
-import time
+import datetime
 import picamera
 import argparse
 
@@ -16,10 +16,11 @@ parser.add_argument('-a','--annotate_text',
 
 args = parser.parse_args()
 
-vid_file = '/media/DATA/' + args.filename
+vid_file = '/media/DATA/' + args.filename + '.h264'
+annotate_text = args.annotate_text + datetime.datetime.now().strftime("%X %m/%d/%Y")
 
 with picamera.PiCamera(resolution = (1640, 1232), framerate = 24, sensor_mode = 4) as camera:
-    camera.annotate_text = args.annotate_text
+    camera.annotate_text = annotate_text
     camera.start_recording(vid_file, format = 'h264',
                            level = '4.2', 
                            intra_period = 48,
