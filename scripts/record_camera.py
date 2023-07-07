@@ -6,6 +6,7 @@ from picamera2.encoders import H264Encoder
 from picamera2 import MappedArray
 from picamera2.outputs import FfmpegOutput
 import argparse
+import logging
 
 parser = argparse.ArgumentParser(
     prog='TrapCam',
@@ -20,6 +21,11 @@ parser.add_argument('-a','--annotate_text',
                     default='NO CAMERA NUMBER SET')
 
 args = parser.parse_args()
+
+logging.basicConfig(filename='/home/' + args.annotation_text + '/camera_error.log',
+                    level=logging.DEBUG,
+                    format='%(asctime)s %(levelname)s %(name)s %(message)s')
+logger = logging.getLogger(__name__)
 
 vid_file = '/media/DATA/' + args.filename + '.mov'
 output = FfmpegOutput(vid_file)
@@ -37,16 +43,18 @@ def apply_timestamp(request):
 
 encoder = H264Encoder(10000000)
 
-camera = picamera2.Picamera2()
-configuration = camera.create_video_configuration()
-camera.configure(configuration)
+try:
+    camera = picamera2.Picamera2()
+    configuration = camera.create_video_configuration()
+    camera.configure(configuration)
 
-camera.pre_callback = apply_timestamp
+    camera.pre_callback = apply_timestamp
 
-camera.video_configuration.size = (1640, 1232)
-camera.set_controls({"FrameRate": 24})
+    camera.video_configuration.size = (1640, 1232)
+    camera.set_controls({"FrameRate": 24})
 
-camera.start_recording(encoder, output)
-time.sleep(300)
-camera.stop_recording()
-
+    camera.start_recording(encoder, output)
+    time.sleep(300)
+    camera.stop_recording()
+except Exception as e:
+    logger.error(e)
