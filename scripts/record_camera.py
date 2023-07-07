@@ -22,7 +22,7 @@ parser.add_argument('-a','--annotate_text',
 
 args = parser.parse_args()
 
-logging.basicConfig(filename='/home/' + args.annotation_text + '/camera_error.log',
+logging.basicConfig(filename='/home/' + args.annotate_text + '/camera_error.log',
                     level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger = logging.getLogger(__name__)
