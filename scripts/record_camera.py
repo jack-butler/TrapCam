@@ -1,6 +1,10 @@
 import datetime
 import time
+import cv2
 import picamera2
+from picamera2.encoders import H264Encoder
+from picamera2 import MappedArray
+from picamera2.outputs import FfmpegOutput
 import argparse
 
 parser = argparse.ArgumentParser(
@@ -17,8 +21,19 @@ parser.add_argument('-a','--annotate_text',
 
 args = parser.parse_args()
 
-vid_file = '/media/DATA/' + args.filename + '.h264'
-annotate_text = args.annotate_text + datetime.datetime.now().strftime("%X %m/%d/%Y")
+vid_file = '/media/DATA/' + args.filename + '.mov'
+output = FfmpegOutput(vid_file)
+
+origin = (0, 30)
+color = (255, 255, 255)
+font = cv2.FONT_HERSHEY_SIMPLEX
+scale = 1
+thickness = 2
+
+def apply_timestamp(request):
+    timestamp = args.annotate_text + ' ' + time.strftime('%X %Y/%m/%d')
+    with MappedArray(request, "main") as m:
+        cv2.putText(m.array, timestamp, origin, font, scale, color, thickness)
 
 encoder = H264Encoder(10000000)
 
@@ -26,12 +41,12 @@ camera = picamera2.Picamera2()
 configuration = camera.create_video_configuration()
 camera.configure(configuration)
 
-with camera.controls as ctrl:
-    ctrl.Resolution = (1640, 1232)
-    ctrl.FrameRate = 24
-    ctrl.Sensor_Mode = 4
+camera.pre_callback = apply_timestamp
 
-camera.start_recording(encoder, vid_file)
+camera.video_configuration.size = (1640, 1232)
+camera.set_controls({"FrameRate": 24})
+
+camera.start_recording(encoder, output)
 time.sleep(300)
 camera.stop_recording()
 
