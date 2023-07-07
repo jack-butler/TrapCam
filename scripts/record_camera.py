@@ -50,16 +50,3 @@ camera.start_recording(encoder, output)
 time.sleep(300)
 camera.stop_recording()
 
-""" with picamera2.Picamera2() as camera:
-    camera.annotate_text = annotate_text
-    camera.start_recording(vid_file, format = 'h264',
-                           level = '4.2', 
-                           intra_period = 48,
-                           inline_headers = True,
-                           sps_timing = True,
-                           bitrate = 10000000,
-                           quality = 20
-                           )
-    camera.wait_recording(timeout = 300)
-    camera.stop_recording() 
-"""

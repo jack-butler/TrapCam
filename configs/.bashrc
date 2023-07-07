@@ -119,6 +119,8 @@ clear
 sleep 1s
 continuous=0
 
+. $HOME/wittypi/utilities.sh
+
 # Test whether to start TrapCam
 echo "Testing whether to start TrapCam..."
 if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ] || \
@@ -127,7 +129,8 @@ if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ] || 
 	echo "Monitor is plugged in"
 	echo "TrapCam will not start. Exiting to CLI..."
 else
-	sudo wittypi/syncTime.sh
+	sudo rtc_to_system
+
     if [ $continuous == 0 ]; then
 	    echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
 	    sleep 5s
