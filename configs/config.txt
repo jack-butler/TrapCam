@@ -57,7 +57,7 @@ dtparam=audio=on
 dtparam=i2c1=on
 dtoverlay=pi3-miniuart-bt
 core_freq=250
-start_x=0
+camera_auto_detect=1
 gpu_mem=128
 
 disable_camera_led=1
