@@ -127,7 +127,7 @@ fi
 # Install Python libraries
 # ----------------------------------------------------------
 apt install -y python3-picamera2
-pip3 install opencv-python
+apt install -y python3-opencv
 
 # ----------------------------------------------------------
 # Finish install
@@ -138,7 +138,12 @@ echo "--------------------------------------------------------------------------
 echo ""
 echo "TrapCam software has been installed and will start upon reboot"
 echo "BE SURE TO SET THE WITTY PI DEFAULT STATE TO ON"
+echo "AND CHECK THAT LEGACY CAMERA STACK IS DISABLED VIA raspi-config"
 echo ""
+echo ""
+echo "Sometimes the opencv install doesn't work right b/c of a numpy"
+echo "import issue. The solution is to install a lower version of numpy."
+echo "TrapCam has been tested against numpy==1.24.4"
 echo "-------------------------------------------------------------------------------"
 
 exit 0

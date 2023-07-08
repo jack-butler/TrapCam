@@ -22,14 +22,8 @@ parser.add_argument('-a','--annotate_text',
                     default=' ')
 
 args = parser.parse_args()
-
-if args.annotate_text == ' ':
-    result = subprocess.check_output(['$(getent passwd $SUDO_USER | cut -d: -f6)'],
-                                                 shell=True)
-    user = result.decode('utf-8')
-    args.annotate_text = user.strip('\n')
     
-logging.basicConfig(filename='/home/' + args.annotate_text + '/camera_error.log',
+logging.basicConfig(filename='camera_error.log',
                     level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
 logger = logging.getLogger(__name__)
