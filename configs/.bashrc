@@ -134,7 +134,7 @@ else
 	    rf="run.log"
 
         sudo mount /dev/sda1 /media/DATA
-        #sudo ./schedule_duty_cycle.sh
+        
 	    timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
 
 	    sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}"

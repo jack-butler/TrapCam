@@ -1,5 +1,6 @@
 import datetime
 import time
+import subprocess
 import cv2
 import picamera2
 from picamera2.encoders import H264Encoder
@@ -18,10 +19,16 @@ parser.add_argument('filename',
                     help='Filename to store the video')
 parser.add_argument('-a','--annotate_text',
                     help='Annotation text to overlay onto video',
-                    default='NO CAMERA NUMBER SET')
+                    default=' ')
 
 args = parser.parse_args()
 
+if args.annotate_text == ' ':
+    result = subprocess.check_output(['$(getent passwd $SUDO_USER | cut -d: -f6)'],
+                                                 shell=True)
+    user = result.decode('utf-8')
+    args.annotate_text = user.strip('\n')
+    
 logging.basicConfig(filename='/home/' + args.annotate_text + '/camera_error.log',
                     level=logging.DEBUG,
                     format='%(asctime)s %(levelname)s %(name)s %(message)s')
