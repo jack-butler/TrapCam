@@ -39,7 +39,8 @@ tool, and alter these settings:
     * Change timezone to your timezone
     * Change keyboard layout to the keyboard you are using (likely standard US English)
 5. Interface Options
-    * Enable Camera Interface: Yes
+    * Enable Camera Interface: No
+    * Using the Python API to the camera requires the legacy camera stack to be deactivated.
 
 Use the right arrow to select "Finish", and reboot.
 
