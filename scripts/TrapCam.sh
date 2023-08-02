@@ -72,11 +72,11 @@ fi
 # Take video
 # -----------------------------------------------------------------------
 vidname="${user}_$(date +%Y%m%d%H%M%S)"
-echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
+echo "Video filename: "$vidname".mov" |& tee -a "${rf}"
 
 cd /media/DATA
 echo "Video recording started at $(date +%T)" |& tee -a "${rf}"
-echo "Video filename: "$vidname".h264" |& tee -a "${rf}"
+echo "Video filename: "$vidname".mov" |& tee -a "${rf}"
 
 timeout --signal=SIGKILL 360 \
 	python3 $uhome/record_camera.py $vidname -a $user
