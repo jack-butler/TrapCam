@@ -58,12 +58,12 @@ running "git clone https://github.com/WiringPi/WiringPi.git". That will download
 WiringPi toolset into a WiringPi directory in your $HOME directory. Move into the
 WiringPi directory ("cd WiringPi/"), and run "./build" to compile the WiringPi tools.
 
-To control rPi's duty cycle, we'll use the WittyPi 2 HAT, but first we need to install
+To control rPi's duty cycle, we'll use the WittyPi 4 HAT, but first we need to install
 the WittyPi software. DO NOT ATTACH THE WITTY PI BEFORE INSTALLING THE SOFTWARE. Move
-back into $HOME, and run  "wget http://www.uugear.com/repo/WittyPi2/installWittyPi.sh"
-to download the installer. Run "sudo sh installWittyPi.sh" to install the software, and
+back into $HOME, and run  "wget http://www.uugear.com/repo/WittyPi4/install.sh"
+to download the installer. Run "sudo sh install.sh" to install the software, and
 reboot yet again. Once the software is installed, you can power off the rPi and attach
-the WittyPi. If you'd like, you can "sudo rm installWittyPi.sh" to keep your $HOME
+the WittyPi. If you'd like, you can "sudo rm install.sh" to keep your $HOME
 directory clean.
 
 Finally, you need to install the TrapCam software using git. Move into $HOME, and run
