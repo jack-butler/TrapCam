@@ -129,7 +129,7 @@ if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ] || 
 	echo "Monitor is plugged in"
 	echo "TrapCam will not start. Exiting to CLI..."
 else
-    echo "" |& tee -a "${rf}"
+    sudo echo "" |& tee -a "${rf}"
     sudo ./syncTime.sh |& tee -a "${rf}"
 
     if [ $continuous == 0 ]; then
