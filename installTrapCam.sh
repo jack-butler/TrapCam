@@ -100,9 +100,11 @@ echo "Copying TrapCam shell scripts..."
 cp $uhome/TrapCam/scripts/TrapCam.sh .
 cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh .
 cp $uhome/TrapCam/scripts/record_camera.py .
+cp $uhome/TrapCam/scripts/syncTime.sh
 
 chmod +x TrapCam.sh
 chmod +x schedule_duty_cycle.sh
+chmod +x syncTime.sh
 
 echo "Done"
 # ----------------------------------------------------------
