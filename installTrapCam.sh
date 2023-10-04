@@ -72,13 +72,24 @@ cp $uhome/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.ser
 cp $uhome/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
 cp $uhome/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
 
+#cp $uhome/TrapCam/services/syncTime.service /etc/systemd/system/syncTime.service
+#cp $uhome/TrapCam/scripts/syncTime.sh /usr/bin/
+#chmod +x /usr/bin/syncTime.sh
+
+#cp $uhome/TrapCame/services/schedule_startup.service /etc/systemd/system/schedule_startup.service
+#cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh /usr/bin/
+#chmod +x /usr/bin/schedule_duty_cycle.sh
+
 systemctl enable splashscreen.service
 systemctl start splashscreen.service
 
 systemctl enable image_on_shutdown.service
 systemctl start image_on_shutdown.service
 
-echo "Done creating boot and shutdown services"
+#systemctl enable syncTime.service
+#systemctl start syncTime.service
+
+echo "Done creating boot shutdown, and clock sync services"
 # ----------------------------------------------------------
 # Copy schedule scripts
 # ----------------------------------------------------------
@@ -98,19 +109,16 @@ echo "Done copying schedules..."
 echo "Copying TrapCam shell scripts..."
 
 cp $uhome/TrapCam/scripts/TrapCam.sh .
-cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh .
 cp $uhome/TrapCam/scripts/record_camera.py .
-cp $uhome/TrapCam/scripts/syncTime.sh
 
 chmod +x TrapCam.sh
-chmod +x schedule_duty_cycle.sh
-chmod +x syncTime.sh
 
 echo "Done"
 # ----------------------------------------------------------
 # Copy splashscreen image
 # ----------------------------------------------------------
-cp $uhome/TrapCam/splash.png /etc/splash.png
+cp /usr/share/plymouth/themes/pix/splash.png /usr/share/plymouth/themes/pix/splash.png.old
+cp $uhome/TrapCam/splash.png /usr/share/plymouth/themes/pix/splash.png
 
 # ----------------------------------------------------------
 # Make USB mount location

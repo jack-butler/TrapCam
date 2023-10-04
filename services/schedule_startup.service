@@ -1,0 +1,11 @@
+[Unit]
+Description=Schedule next startuo
+After=syncTime.service
+
+[Service]
+ExecStart=/usr/bin/schedule_duty_cycle.sh
+StandardInput=tty
+StandardOutput=tty
+
+[Install]
+WantedBy=basic.target

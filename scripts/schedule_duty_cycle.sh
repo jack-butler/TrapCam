@@ -11,7 +11,8 @@
 # Schedule next start-up
 # -----------------------------------------------------------------------
 rf="run.log"
-uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
+uhome="$(eval echo \"/home/$(dir /home)\")"
+#uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
 
 echo "" |& tee -a "${rf}"
 echo "Scheduling next start-up..." |& tee -a "${rf}"

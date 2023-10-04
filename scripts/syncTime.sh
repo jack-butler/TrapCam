@@ -10,7 +10,8 @@ if [ ! -z "$1" ]; then
 fi
 
 # include utilities script in same directory
-uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
+#uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
+uhome="$(eval echo \"/home/$(dir /home)\")"
 . $uhome/wittypi/utilities.sh
 
 

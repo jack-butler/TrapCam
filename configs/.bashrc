@@ -130,7 +130,6 @@ if [ $(tvservice -s | sed 's/.*state \([a-zA-Z0-9]\+\).*/\1/g') = 0x12000a ] || 
 	echo "TrapCam will not start. Exiting to CLI..."
 else
     sudo echo "" |& tee -a "${rf}"
-    sudo ./syncTime.sh |& tee -a "${rf}"
 
     if [ $continuous == 0 ]; then
 	    echo "TrapCam.sh will start in 5 seconds. ^C to exit..."
@@ -138,7 +137,6 @@ else
 
         sudo mount /dev/sda1 /media/DATA
         
-        timeout --signal=SIGKILL 30s sudo ./schedule_duty_cycle.sh
 	    timeout --signal=SIGKILL 420s sudo ./TrapCam.sh
 
 	    sudo echo "rPi shutdown at $(date)" |& tee -a "${rf}"

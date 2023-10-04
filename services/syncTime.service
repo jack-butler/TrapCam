@@ -1,0 +1,10 @@
+[Unit]
+Description=Write RTC time from wittypi to system
+
+[Service]
+ExecStart=/usr/bin/syncTime.sh
+StandardInput=tty
+StandardOutput=tty
+
+[Install]
+WantedBy=basic.target
