@@ -34,7 +34,7 @@ tool, and alter these settings:
 3. Boot Options
     * Desktop/CLI - set to "Console autologin"
     * Wait for network at boot: No
-4. Localisation Options (skip if you used GUI version of Rasbian, as you set this up already):
+4. Localisation Options (skip if you used GUI version of Raspbian, as you set this up already):
     * Change timezone to your timezone
     * Change keyboard layout to the keyboard you are using (likely standard US English)
 5. Interface Options
@@ -66,7 +66,7 @@ the WittyPi. If you'd like, you can "sudo rm install.sh" to keep your $HOME
 directory clean.
 
 Finally, you need to install the TrapCam software using git. Move into $HOME, and run
-"git clone https://github.com/jack-butler/TrapCam" to clone the software into the TrapCam
+"git clone -b implement_picamera https://github.com/jack-butler/TrapCam" to clone the software from the implement_picamera branch into the TrapCam
 directory. Move into the TrapCam directory ("cd TrapCam/"), and run "sudo bash
 installTrapCam.sh". This installer will copy the configs, services, and scripts to their
 correct locations.
