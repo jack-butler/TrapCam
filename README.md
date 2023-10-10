@@ -78,6 +78,7 @@ Turn off your raspberry pi by running "poweroff". Remove power source from pi an
 3. Set low voltage threshold to 0 or disabled for same reason.
    
 In "View/change other settings"
+
 4. Set default state to "ON" (This will ensure the camera turns on when power is connected, very important)
 5. Set dummy load duration to "15." This is optional, but its a good way of ensuring the Pi is continuing to draw power from the battery bank.
 
