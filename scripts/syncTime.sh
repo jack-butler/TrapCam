@@ -25,3 +25,6 @@ rtctime="$(get_rtc_time)"
 if [[ $rtctime != *"1999"* ]] && [[ $rtctime != *"2000"* ]]; then
   rtc_to_system
 fi
+
+# Explicit exit so that systemd knows to kick off schedule process
+exit 0
