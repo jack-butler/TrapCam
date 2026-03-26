@@ -1,5 +1,5 @@
 [Unit]
-Description=Schedule next startuo
+Description=Schedule next startup
 After=syncTime.service
 
 [Service]
