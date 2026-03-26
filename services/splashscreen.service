@@ -1,10 +1,12 @@
 [Unit]
 Description=boot splash screen
+After=local-fs.target
 
 [Service]
-ExecStart=/usr/bin/fbi -d /dev/fb0 --noverbose -a /etc/splash.png
+ExecStart=/usr/bin/fbi -d /dev/fb0 --noverbose -a /usr/share/plymouth/themes/pix/splash.png
+Type=oneshot
 StandardInput=tty
 StandardOutput=tty
 
 [Install]
-WantedBy=basic.target
+WantedBy=sysinit.target
