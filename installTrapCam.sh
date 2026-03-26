@@ -43,6 +43,23 @@ echo ' `---|  |----`|  |_)  |      /  ^  \    |  |_)  | |  ,----   /  ^  \    | 
 echo '     |  |     |      /      /  /_\  \   |   ___/  |  |      /  /_\  \   |  |\/|  | '
 echo '     |  |     |  |\  \----./  _____  \  |  |      |  `----./  _____  \  |  |  |  | '
 echo '     |__|     | _| `._____/__/     \__\ | _|       \______/__/     \__\ |__|  |__| '
+echo ''
+echo ''
+echo ' Designed, coded, and built by: '
+echo ''
+echo " __          ___ _     _  _____            _                           ";
+echo " \ \        / (_) |   | |/ ____|          | |                          ";
+echo "  \ \  /\  / / _| | __| | (___   ___  __ _| |__   ___  _ __ ___  ___   ";
+echo "   \ \/  \/ / | | |/ _` |\___ \ / _ \/ _` | '_ \ / _ \| '__/ __|/ _ \  ";
+echo "    \  /\  /  | | | (_| |____) |  __/ (_| | | | | (_) | |  \__ \  __/  ";
+echo "  ___\/  \/   |_|_|\__,_|_____/ \___|\__,_|_| |_|\___/|_|  |___/\___|  ";
+echo " |  __ \               | |                                | |          ";
+echo " | |  | | _____   _____| | ___  _ __  _ __ ___   ___ _ __ | |_         ";
+echo " | |  | |/ _ \ \ / / _ \ |/ _ \| '_ \| '_ ` _ \ / _ \ '_ \| __|        ";
+echo " | |__| |  __/\ V /  __/ | (_) | |_) | | | | | |  __/ | | | |_         ";
+echo " |_____/ \___| \_/ \___|_|\___/| .__/|_| |_| |_|\___|_| |_|\__|        ";
+echo "                               | |                                     ";
+echo "                               |_|                                     ";
 
 # ----------------------------------------------------------
 # Copy configs
@@ -72,13 +89,13 @@ cp $uhome/TrapCam/services/autologin@.service /etc/systemd/system/autologin@.ser
 cp $uhome/TrapCam/services/image_on_shutdown.service /etc/systemd/system/image_on_shutdown.service
 cp $uhome/TrapCam/services/splashscreen.service /etc/systemd/system/splashscreen.service
 
-#cp $uhome/TrapCam/services/syncTime.service /etc/systemd/system/syncTime.service
-#cp $uhome/TrapCam/scripts/syncTime.sh /usr/bin/
-#chmod +x /usr/bin/syncTime.sh
+cp $uhome/TrapCam/services/syncTime.service /etc/systemd/system/syncTime.service
+cp $uhome/TrapCam/scripts/syncTime.sh /usr/bin/
+chmod +x /usr/bin/syncTime.sh
 
-#cp $uhome/TrapCame/services/schedule_startup.service /etc/systemd/system/schedule_startup.service
-#cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh /usr/bin/
-#chmod +x /usr/bin/schedule_duty_cycle.sh
+cp $uhome/TrapCame/services/schedule_startup.service /etc/systemd/system/schedule_startup.service
+cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh /usr/bin/
+chmod +x /usr/bin/schedule_duty_cycle.sh
 
 systemctl enable splashscreen.service
 systemctl start splashscreen.service
@@ -86,8 +103,8 @@ systemctl start splashscreen.service
 systemctl enable image_on_shutdown.service
 systemctl start image_on_shutdown.service
 
-#systemctl enable syncTime.service
-#systemctl start syncTime.service
+systemctl enable syncTime.service
+systemctl start syncTime.service
 
 echo "Done creating boot shutdown, and clock sync services"
 # ----------------------------------------------------------
