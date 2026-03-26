@@ -1,7 +1,7 @@
 # Turns on the TrapCam every 10 mins to record video for 5 minutes
 
 BEGIN 2015-08-01 00:00:00
-END 2025-07-31 23:59:59
+END 2035-12-31 23:59:59
 
 # Turn the rPi on for "4 min" and wait for shutdown
 # Will start every 10 mins, as long as schedule wasn't missed from last shut down
