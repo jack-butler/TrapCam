@@ -106,6 +106,9 @@ systemctl start image_on_shutdown.service
 systemctl enable syncTime.service
 systemctl start syncTime.service
 
+systemctl enable schedule_startup.service
+systemctl start schedule_startup.service
+
 echo "Done creating boot shutdown, and clock sync services"
 # ----------------------------------------------------------
 # Copy schedule scripts
