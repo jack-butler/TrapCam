@@ -10,9 +10,8 @@
 # -----------------------------------------------------------------------
 # Schedule next start-up
 # -----------------------------------------------------------------------
-rf="run.log"
-uhome="$(eval echo \"/home/$(dir /home)\")"
-#uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
+uhome=uhome=$(echo "$(getent passwd $SUDO_USER | cut -d: -f6)" | grep -oP "/home/trapcam(\d+)?")
+rf="${uhome}/run.log"
 
 echo "" |& tee -a "${rf}"
 echo "Scheduling next start-up..." |& tee -a "${rf}"
