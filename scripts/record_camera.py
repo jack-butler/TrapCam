@@ -1,3 +1,20 @@
+"""
+TrapCam recording module
+
+This module uses the Python PiCamera library to record video from the
+rPi camera system. This should be more robust and future-proof compared to the
+raspi-vid Bash programs originally used and supplied with the Raspian software.
+
+Positional Argument:
+filename: Fulle filepath of where to store the video, including suffix
+
+Optional Flags:
+-a, --annotate_text: Text to display on video files, typically the camera name
+
+Output:
+A video file at `filename` location, in the format of the suffix used in the filename.
+"""
+
 import datetime
 import time
 import subprocess
@@ -12,7 +29,7 @@ import logging
 parser = argparse.ArgumentParser(
     prog='TrapCam',
     description='Records video from underwater cameras',
-    epilog="This probably wasn't very helpful..."
+    epilog=__doc__
 )
 
 parser.add_argument('filename', 
@@ -38,6 +55,7 @@ scale = 1
 thickness = 2
 
 def apply_timestamp(request):
+    """Applies camera name and timestamps to video files"""
     timestamp = args.annotate_text + ' ' + time.strftime('%X %Y/%m/%d')
     with MappedArray(request, "main") as m:
         cv2.putText(m.array, timestamp, origin, font, scale, color, thickness)
