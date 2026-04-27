@@ -11,7 +11,7 @@ fi
 
 # include utilities script in same directory
 #uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
-uhome="$(eval echo \"/home/$(dir /home)\")"
+uhome=uhome=$(echo "$(getent passwd $SUDO_USER | cut -d: -f6)" | grep -oP "/home/trapcam(\d+)?")
 . $uhome/wittypi/utilities.sh
 
 
