@@ -12,8 +12,8 @@
 # ----------------------------------------------------------
 # Get users home dir, not roots
 # ----------------------------------------------------------
-uhome="$(getent passwd $SUDO_USER | cut -d: -f6)"
-user="$(getent passwd $SUDO_USER | cut -d: -f1)"
+uhome=$(echo "$(getent passwd $SUDO_USER | cut -d: -f6)" | grep -oP "/home/trapcam(\d+)?")
+user=$(echo "$(getent passwd $SUDO_USER | cut -d: -f1)" | grep -oP "trapcam(\d+)?")
 
 # ----------------------------------------------------------
 # Check whether git and fbi are installed
@@ -47,19 +47,23 @@ echo ''
 echo ''
 echo ' Designed, coded, and built by: '
 echo ''
-echo " __          ___ _     _  _____            _                           ";
-echo " \ \        / (_) |   | |/ ____|          | |                          ";
-echo "  \ \  /\  / / _| | __| | (___   ___  __ _| |__   ___  _ __ ___  ___   ";
-echo "   \ \/  \/ / | | |/ _` |\___ \ / _ \/ _` | '_ \ / _ \| '__/ __|/ _ \  ";
-echo "    \  /\  /  | | | (_| |____) |  __/ (_| | | | | (_) | |  \__ \  __/  ";
-echo "  ___\/  \/   |_|_|\__,_|_____/ \___|\__,_|_| |_|\___/|_|  |___/\___|  ";
-echo " |  __ \               | |                                | |          ";
-echo " | |  | | _____   _____| | ___  _ __  _ __ ___   ___ _ __ | |_         ";
-echo " | |  | |/ _ \ \ / / _ \ |/ _ \| '_ \| '_ ` _ \ / _ \ '_ \| __|        ";
-echo " | |__| |  __/\ V /  __/ | (_) | |_) | | | | | |  __/ | | | |_         ";
-echo " |_____/ \___| \_/ \___|_|\___/| .__/|_| |_| |_|\___|_| |_|\__|        ";
-echo "                               | |                                     ";
-echo "                               |_|                                     ";
+echo "                                                                                    ";
+echo "▄     ▄   ▀    ▀▀█        █   ▄▄▄▄                █                                 ";
+echo "█  █  █ ▄▄▄      █     ▄▄▄█  █▀   ▀  ▄▄▄    ▄▄▄   █ ▄▄    ▄▄▄    ▄ ▄▄   ▄▄▄    ▄▄▄  ";
+echo "▀ █▀█ █   █      █    █▀ ▀█  ▀█▄▄▄  █▀  █  ▀   █  █▀  █  █▀ ▀█   █▀  ▀ █   ▀  █▀  █ ";
+echo " ██ ██▀   █      █    █   █      ▀█ █▀▀▀▀  ▄▀▀▀█  █   █  █   █   █      ▀▀▀▄  █▀▀▀▀ ";
+echo " █   █  ▄▄█▄▄    ▀▄▄  ▀█▄██  ▀▄▄▄█▀ ▀█▄▄▀  ▀▄▄▀█  █   █  ▀█▄█▀   █     ▀▄▄▄▀  ▀█▄▄▀ ";
+echo "                                                                                    ";
+echo "                                                                                    ";
+echo "                                                                                    ";
+echo " ▄▄▄▄                        ▀▀█                                         ▄          ";
+echo " █   ▀▄  ▄▄▄   ▄   ▄   ▄▄▄     █     ▄▄▄   ▄▄▄▄   ▄▄▄▄▄   ▄▄▄   ▄ ▄▄   ▄▄█▄▄        ";
+echo " █    █ █▀  █  ▀▄ ▄▀  █▀  █    █    █▀ ▀█  █▀ ▀█  █ █ █  █▀  █  █▀  █    █          ";
+echo " █    █ █▀▀▀▀   █▄█   █▀▀▀▀    █    █   █  █   █  █ █ █  █▀▀▀▀  █   █    █          ";
+echo " █▄▄▄▀  ▀█▄▄▀    █    ▀█▄▄▀    ▀▄▄  ▀█▄█▀  ██▄█▀  █ █ █  ▀█▄▄▀  █   █    ▀▄▄        ";
+echo "                                           █                                        ";
+echo "                                           ▀                                        ";
+
 
 # ----------------------------------------------------------
 # Copy configs
@@ -93,7 +97,7 @@ cp $uhome/TrapCam/services/syncTime.service /etc/systemd/system/syncTime.service
 cp $uhome/TrapCam/scripts/syncTime.sh /usr/bin/
 chmod +x /usr/bin/syncTime.sh
 
-cp $uhome/TrapCame/services/schedule_startup.service /etc/systemd/system/schedule_startup.service
+cp $uhome/TrapCam/services/schedule_startup.service /etc/systemd/system/schedule_startup.service
 cp $uhome/TrapCam/scripts/schedule_duty_cycle.sh /usr/bin/
 chmod +x /usr/bin/schedule_duty_cycle.sh
 
@@ -163,8 +167,13 @@ apt install -y python3-opencv
 # Finish install
 # ----------------------------------------------------------
 cd $uhome
+clear
 echo ""
 echo "-------------------------------------------------------------------------------"
+echo ""
+echo "░▀█▀░█▀▄░█▀█░█▀█░█▀▀░█▀█░█▄█";
+echo "░░█░░█▀▄░█▀█░█▀▀░█░░░█▀█░█░█";
+echo "░░▀░░▀░▀░▀░▀░▀░░░▀▀▀░▀░▀░▀░▀";
 echo ""
 echo "TrapCam software has been installed and will start upon reboot"
 echo "BE SURE TO SET THE WITTY PI DEFAULT STATE TO ON"
@@ -174,6 +183,19 @@ echo ""
 echo "Sometimes the opencv install doesn't work right b/c of a numpy"
 echo "import issue. The solution is to install a lower version of numpy."
 echo "TrapCam has been tested against numpy==1.24.4"
+echo ""
+echo "This software is provided with absolutley no warranty or guarantee. It might"
+echo "work superbly, or it might not. If you find errors or want to contribute to"
+echo "the improvement of this software, please fork the repo, make your changes"
+echo "and submit a PR for review/approval."
+echo ""
+echo "░█░█░▀█▀░█░░░█▀▄░█▀▀░█▀▀░█▀█░█░█░█▀█░█▀▄░█▀▀░█▀▀";
+echo "░█▄█░░█░░█░░░█░█░▀▀█░█▀▀░█▀█░█▀█░█░█░█▀▄░▀▀█░█▀▀";
+echo "░▀░▀░▀▀▀░▀▀▀░▀▀░░▀▀▀░▀▀▀░▀░▀░▀░▀░▀▀▀░▀░▀░▀▀▀░▀▀▀";
+echo "░█▀▄░█▀▀░█░█░█▀▀░█░░░█▀█░█▀█░█▄█░█▀▀░█▀█░▀█▀    ";
+echo "░█░█░█▀▀░▀▄▀░█▀▀░█░░░█░█░█▀▀░█░█░█▀▀░█░█░░█░    ";
+echo "░▀▀░░▀▀▀░░▀░░▀▀▀░▀▀▀░▀▀▀░▀░░░▀░▀░▀▀▀░▀░▀░░▀░    ";
 echo "-------------------------------------------------------------------------------"
+echo ""
 
 exit 0
