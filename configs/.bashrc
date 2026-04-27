@@ -117,7 +117,7 @@ fi
 #--------------------------------------------
 clear
 sleep 1s
-continuous=0
+continuous=1 # 0 for duty cycle recording, 1 for continuous recording; default = CONTINUOUS
 
 rf="run.log"
 
