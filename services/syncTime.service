@@ -1,6 +1,7 @@
 [Unit]
 Description=Write RTC time from wittypi to system
 Before=schedule_startup.service
+After=wittypi.service
 
 [Service]
 ExecStart=/usr/bin/syncTime.sh
