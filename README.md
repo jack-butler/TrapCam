@@ -1,27 +1,26 @@
 # TrapCam
 The TrapCam repository contains instructions and software to construct a TrapCam.
 
-If you are using a WittyPi2, clone the master branch of this repository.
-If you are using a WittyPi3, clone the v2 branch of this repository.
+This version works with WittyPi 4. Please clone branch implement_picamera, NOT main, for proper function.
 
 # Initial set up
 #
 The Raspberry Pi uses a microSD card as it's "internal" drive, on which
 the Linux-based Raspbian OS will be installed. I recommend using the
 "Lite" version of the OS - which lacks the GUI - but the TrapCam
-software should also work with the GUI version of the OS.
+software should also work with the GUI version of the OS. If you are technologically challenged, use the full GUI version.
 
 Firstly, you need to format your microSD as FAT or FAT32. Next, use
-Etcher to flash the Raspbian OS image to the microSD card. Once flashed,
-remove the microSD from your computer and insert it into the rPi will
+BlenaEtcher to flash the most recent Raspbian OS image to the microSD card. 32 bit will work with any Raspberry Pi, while 64 bit is for Raspbery Pi 4s and newer. Once flashed,
+remove the microSD from your computer and insert it into the rPi while
 it's unplugged.
 
 Plug in a keyboard and a monitor, and then plug in the rPi. Be sure the
 monitor is on before you plug in the rPi, otherwise the rPi won't output
 to the screen.
 
+
 # Configure the rPI
-#
 You'll probably be asked to log in upon first boot. Username = pi,
 Password = raspberry
 
@@ -35,7 +34,7 @@ tool, and alter these settings:
 3. Boot Options
     * Desktop/CLI - set to "Console autologin"
     * Wait for network at boot: No
-4. Localisation Options:
+4. Localisation Options (skip if you used GUI version of Raspbian, as you set this up already):
     * Change timezone to your timezone
     * Change keyboard layout to the keyboard you are using (likely standard US English)
 5. Interface Options
@@ -44,12 +43,12 @@ tool, and alter these settings:
 
 Use the right arrow to select "Finish", and reboot.
 
-Once rebooted, run "sudo apt update", then "sudo echo "y" | sudo apt upgrade" to update
+Once rebooted, run "sudo apt update", then sudo apt upgrade" to update
 packages. After updating/upgrading, you'll need to re-run "sudo raspi-config" and reset
 the rPi to boot to "Console autologin" again (#3 above) and reboot.
 
 Once up-to-date, you need to install a few packages and add-ons that the TrapCam
-software depends on. Run "sudo apt install git" to install Git, and "sudo apt install fbi"
+software depends on. Run "sudo apt install git" to install Git (this is just in case, as git should come installed already), and "sudo apt install fbi"
 to install framebuffer, and then reboot (I know, I know, it's a lot of rebooting...)
 
 Next, install WiringPi using git. In your home directory (if you're unsure of where that
@@ -67,11 +66,23 @@ the WittyPi. If you'd like, you can "sudo rm install.sh" to keep your $HOME
 directory clean.
 
 Finally, you need to install the TrapCam software using git. Move into $HOME, and run
-"git clone https://github.com/jack-butler/TrapCam" to clone the software into the TrapCam
+"git clone -b implement_picamera https://github.com/jack-butler/TrapCam" to clone the software from the implement_picamera branch into the TrapCam
 directory. Move into the TrapCam directory ("cd TrapCam/"), and run "sudo bash
 installTrapCam.sh". This installer will copy the configs, services, and scripts to their
 correct locations.
+# Configuring Witty Pi
+Turn off your raspberry pi by running "poweroff". Remove power source from pi and connect it to the WittyPi instead. If it doesn't power on immediately, click the button on the WittyPi. Once TrapCam is on, type "cd wittypi" to enter the wittypi directory. From there, run "sh wittypi.sh" to bring up the WittyPi configuration tool. If the WittyPi is not detected, ensure you have a coin cell battery installed in the board, reboot, and try again. Once WittyPi is detected, edit the following settings:
 
+1. Syncronize network time. Do this once while Pi is connected to internet via ethernet. RTC should take of timekeeping after that.
+2. Set over/below temperature action to disabled. You don't want it shutting off becasue it gets hot/cold.
+3. Set low voltage threshold to 0 or disabled for same reason.
+   
+In "View/change other settings"
+
+4. Set default state to "ON" (This will ensure the camera turns on when power is connected, very important)
+5. Set dummy load duration to "15." This is optional, but its a good way of ensuring the Pi is continuing to draw power from the battery bank.
+
+These settings should be saved after they are initially set, so Witty should b good to go after that.
 # Schedule Scripts
 
 The TrapCam software comes with default schedule scripts that duty cycle the rPi. The
